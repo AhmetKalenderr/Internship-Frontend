@@ -33,7 +33,6 @@ export default function Login({isUser,setIsUser,login,setLogin,isRegister,setIsR
         },
         validationSchema:loginSchema,
         onSubmit:(values) => {
-          console.log("Ahmet");
             if(isUser) {
                 LoginUser(values).then(resp =>{
                     localStorage.setItem("token",resp.data.data);
@@ -59,10 +58,7 @@ export default function Login({isUser,setIsUser,login,setLogin,isRegister,setIsR
         }
     })
 
-  const handleClickImage = () => {
-    navigate("/");
-    console.log("Tıklandı");
-  }
+
 
   return (
     <div>

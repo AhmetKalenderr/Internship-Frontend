@@ -32,4 +32,11 @@ export const AppIntern = (values) => {
    return axios.post(`${url}/api/ApplicationIntern/appIntern`,values);
 }
 
+export const RegisterUser = (value) => {
+   return axios.post(`${url}/api/User/addUser`,value);
+}
+
+export const RegisterCompany = (value) => {
+   return axios.post(`${url}/api/Company/addCompany`,value);
+}
 

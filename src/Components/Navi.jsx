@@ -113,6 +113,7 @@ export default function Navi({isUser,setIsUser,login,setLogin,isRegister}) {
 
                 {!login && isRegister && (
                   <Button
+                  className={classes.container_typography_btn}
                     variant="contained"
                     style={{ marginRight: "10px" }}
                     onClick={() => setIsUser(!isUser)}
