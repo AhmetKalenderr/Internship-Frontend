@@ -40,3 +40,7 @@ export const RegisterCompany = (value) => {
    return axios.post(`${url}/api/Company/addCompany`,value);
 }
 
+export const GetAllCity = () => {
+   return axios.post(`${url}/api/City/getAllCity`);
+}
+

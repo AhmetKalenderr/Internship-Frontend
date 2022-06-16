@@ -4,31 +4,48 @@ import * as Yup from "yup";
 import { useFormik } from 'formik';
 import {NotificationManager,NotificationContainer} from 'react-notifications/lib';
 import { Container } from '@mui/system';
-import { Button, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import 'react-notifications/lib/notifications.css';
 import classes from '../asset/Styles/_Login.module.css'
 import images from '../asset/images/login.png'
-import { RegisterCompany, RegisterUser } from '../Services/api';
+import { GetAllCity, RegisterCompany, RegisterUser } from '../Services/api';
 
 export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
     const navigate = useNavigate();
     const [register,setRegister] = useState(false);
 
+    const [cities,setCities] = useState([]);
+
+    const [selectedCity,setSelectedCity] = useState();
+
     useEffect(()=>{
       if(register) {
         navigate("/login")
       }
+      GetAllCity().then(resp=>{
+        setCities(resp.data.data);
+      })
     },[register,navigate])
 
 
-    const registerSchema = Yup.object().shape({
-        email:Yup.string().required("Email alanı boş bırakılamaz!"),
-        password : Yup.string().required("Password alanı boş bırakılamaz!"),
+
+
+    const registerCompanySchema = Yup.object().shape({
+     
         companyName: Yup.string().required("Şirket İsmi alanı boş bırakılamaz!"),
         phoneNumber : Yup.string().required("Telefon Numarası alanı boş bırakılamaz!"),
-        webSite : Yup.string().required("Web Sitesi Alanı boş bırakılamaz!"),
-        name : Yup.string().required("İsim Alanı boş bırakılamaz!"),
-        surname : Yup.string().required("Soyisim Alanı boş bırakılamaz!")
+        email: Yup.string().required("Email alanı boş bırakılamaz!"),
+        password : Yup.string().required("Password alanı boş bırakılamaz!"),
+        webSite :   Yup.string().required("Web Sitesi Alanı boş bırakılamaz!"),
+        cityId : Yup.number().required("Şehir seçimi alanı boş bırakılamaz!")
+       
+    });
+
+    const registerUserSchema = Yup.object().shape({
+      email: Yup.string().required("Email alanı boş bırakılamaz!"),
+      password : Yup.string().required("Password alanı boş bırakılamaz!"),
+      name :  Yup.string().required("İsim Alanı boş bırakılamaz!"),
+      surname : Yup.string().required("Soyisim Alanı boş bırakılamaz!")
     });
 
 
@@ -41,27 +58,35 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
             phoneNumber:"",
             name:"",
             surname:"",
+            cityId : "",
+            schoolId : ""
             
         },
-        validationSchema:registerSchema,
+        validationSchema:isUser ? registerUserSchema : registerCompanySchema,
         onSubmit:(values) => {
-            if(isUser) {
+          if(isUser) {
                 RegisterUser(values).then((resp) => {
                   NotificationManager.success(resp.data.data)
                   navigate("/login")
                 }).catch(resp=>{
-                  NotificationManager.warning(resp.data.data)
+                  NotificationManager.warning(resp.response.data.data)
                 })
             }else {
-              RegisterCompany().then(resp =>{
+              RegisterCompany(values).then(resp =>{
                 NotificationManager.success(resp.data.data)
                 navigate("/login")
+
               }).catch(resp=>{
-                NotificationManager.warning(resp.data.data)
+                NotificationManager.warning(resp.response.data.data)
               })
             }
         }
     })
+
+    const handleSelectedCity = (event) =>{
+      setSelectedCity(event.target.value);
+      formik.values.cityId = event.target.value;
+    }
 
     return (
       <div>
@@ -73,14 +98,14 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
         <div style={{padding: "25px"}}>
         <b className={classes.container_login_b}>{isUser ? 'Kullanıcı Kayıt' : 'Şirket Kayıt'}</b>
         </div>
-        {/* <p onClick={() => {
+        <p onClick={() => {
             navigate("/login")
             setIsRegister(false)
         }}>
           Zaten bir kayıdın var mı {" "}
           <b style={{ color: "#8CC0DE", cursor: "pointer" }}>buraya</b> tıklayarak
           giriş yapabilirsin
-        </p> */}
+        </p>
         <form onSubmit={formik.handleSubmit}>
           {!isUser && <TextField
             id="companyName"
@@ -166,6 +191,25 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
             error={formik.touched.surname && formik.errors.surname}
             helperText={formik.errors.surname}
           />}
+
+          {!isUser && 
+           <FormControl fullWidth style={{marginTop : "20px" , backgroundColor:"rgba(0, 0, 0, 0.06)"}}>
+           <InputLabel id="demo-simple-select-label">Şehir</InputLabel>
+           <Select
+             labelId="demo-simple-select-label"
+             id="demo-simple-select"
+             value={selectedCity}
+             label="Şehir"
+             onChange={handleSelectedCity}
+             error={formik.touched.cityId && formik.errors.cityId}
+           >
+             {cities.map(c=>(
+             <MenuItem value={c.id}>{c.name}</MenuItem>)
+             )}
+           </Select>
+         </FormControl>
+         }
+
           <div className={classes.container_login_div}>
           <Button
             className={classes.container_login_button}
