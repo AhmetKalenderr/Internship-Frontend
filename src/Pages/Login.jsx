@@ -67,6 +67,14 @@ export default function Login({isUser,setIsUser,login,setLogin,isRegister,setIsR
         <div style={{padding: "25px"}}>
           <b className={classes.container_login_b}>{isUser ? 'Kullanıcı Girişi' : 'Şirket Girişi'}</b>
         </div>
+        <p onClick={() => {
+            navigate("/register")
+            setIsRegister(true)
+        }}>
+          Hesabın yok mu {" "}
+          <b style={{ color: "#8CC0DE", cursor: "pointer" }}>buraya</b> tıklayarak
+          hesap oluşturabilirsin
+        </p>
         <form onSubmit={formik.handleSubmit}>
           <TextField
             id="email"

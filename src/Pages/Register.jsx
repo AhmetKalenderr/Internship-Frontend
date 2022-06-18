@@ -8,15 +8,19 @@ import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@m
 import 'react-notifications/lib/notifications.css';
 import classes from '../asset/Styles/_Login.module.css'
 import images from '../asset/images/login.png'
-import { GetAllCity, RegisterCompany, RegisterUser } from '../Services/api';
+import { GetAllCity, GetAllSchool, RegisterCompany, RegisterUser } from '../Services/api';
 
 export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
     const navigate = useNavigate();
     const [register,setRegister] = useState(false);
 
     const [cities,setCities] = useState([]);
+    const [schools,setSchools] = useState([]);
+
 
     const [selectedCity,setSelectedCity] = useState();
+    const [selectedSchool,setSelectedSchool] = useState();
+
 
     useEffect(()=>{
       if(register) {
@@ -24,6 +28,10 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
       }
       GetAllCity().then(resp=>{
         setCities(resp.data.data);
+      })
+
+      GetAllSchool().then(resp=>{
+        setSchools(resp.data.data)
       })
     },[register,navigate])
 
@@ -45,7 +53,8 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
       email: Yup.string().required("Email alanı boş bırakılamaz!"),
       password : Yup.string().required("Password alanı boş bırakılamaz!"),
       name :  Yup.string().required("İsim Alanı boş bırakılamaz!"),
-      surname : Yup.string().required("Soyisim Alanı boş bırakılamaz!")
+      surname : Yup.string().required("Soyisim Alanı boş bırakılamaz!"),
+      schoolId : Yup.number().required("Okul seçimi alanı boş bırakılamaz!")
     });
 
 
@@ -59,7 +68,8 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
             name:"",
             surname:"",
             cityId : "",
-            schoolId : ""
+            schoolId : "",
+            bornYear:0
             
         },
         validationSchema:isUser ? registerUserSchema : registerCompanySchema,
@@ -67,6 +77,7 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
           if(isUser) {
                 RegisterUser(values).then((resp) => {
                   NotificationManager.success(resp.data.data)
+                  setIsRegister(false)
                   navigate("/login")
                 }).catch(resp=>{
                   NotificationManager.warning(resp.response.data.data)
@@ -74,6 +85,7 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
             }else {
               RegisterCompany(values).then(resp =>{
                 NotificationManager.success(resp.data.data)
+                setIsRegister(false)
                 navigate("/login")
 
               }).catch(resp=>{
@@ -86,6 +98,12 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
     const handleSelectedCity = (event) =>{
       setSelectedCity(event.target.value);
       formik.values.cityId = event.target.value;
+    }
+
+    const handleSelectedSchool = (event) =>{
+      setSelectedSchool(event.target.value);
+      formik.values.schoolId = event.target.value;
+      formik.values.bornYear = 0;
     }
 
     return (
@@ -205,6 +223,24 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
            >
              {cities.map(c=>(
              <MenuItem value={c.id}>{c.name}</MenuItem>)
+             )}
+           </Select>
+         </FormControl>
+         }
+
+          {isUser && 
+           <FormControl fullWidth style={{marginTop : "20px" , backgroundColor:"rgba(0, 0, 0, 0.06)"}}>
+           <InputLabel id="demo-simple-select-label">Okul</InputLabel>
+           <Select
+             labelId="demo-simple-select-label"
+             id="demo-simple-select"
+             value={selectedSchool}
+             label="Okul"
+             onChange={handleSelectedSchool}
+             error={formik.touched.schoolId && formik.errors.schoolId}
+           >
+             {schools.map(s=>(
+             <MenuItem value={s.id}>{s.name}</MenuItem>)
              )}
            </Select>
          </FormControl>

@@ -36,6 +36,7 @@ function InternPost({post,isUser}) {
         <CardActions>
           <Typography variant="body1" style={{marginRight:"50px"}}>{post.city.name}</Typography>
           <Typography variant="body1" style={{marginLeft:"50px"}}>{post.position.name}</Typography>
+          <Typography variant="body1" style={{marginLeft:"50px"}}>{new Date(post.postStartTime).toLocaleString()}</Typography>
           {isUser && (
           <Button onClick={handleAppClick} size="small" style={{marginLeft:"auto"}}>Başvur</Button>
           )}
