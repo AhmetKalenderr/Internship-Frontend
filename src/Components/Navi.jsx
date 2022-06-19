@@ -41,13 +41,12 @@ export default function Navi({isUser,setIsUser,login,setLogin,isRegister}) {
 
     return (
       <div>
-        <AppBar position="static" className={classes.container_navbar}>
+        <AppBar position="static" className={classes.container_navbar} style={{borderBottom:"1px solid gray"}}>
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Typography
                 variant="h6"
                 noWrap
-                className={classes.container_typography}
                 // sx={{
                 //   mr: 2,
                 //   display: { xs: "none", md: "flex" },
@@ -104,7 +103,7 @@ export default function Navi({isUser,setIsUser,login,setLogin,isRegister}) {
                 ))}
               </Box>
   
-              <Box sx={{ flexGrow: 0 }}>
+              <Box sx={{ flexGrow: 0}}>
                 {!login && !isRegister && (
                   <Button variant="contained" className={classes.container_typography_btn} onClick={() => setIsUser(!isUser)}>
                     {isUser === true ? 'Şirket Girişi' : 'Kullanıcı Girişi'}
@@ -124,7 +123,7 @@ export default function Navi({isUser,setIsUser,login,setLogin,isRegister}) {
                 {login && (
                   <>
                     <Tooltip title="Şeçenekleri Gör">
-                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,top:"0px" }}>
                         <Avatar
                           alt="Remy Sharp"
                           src="/static/images/avatar/2.jpg"

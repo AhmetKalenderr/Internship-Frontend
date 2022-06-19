@@ -3,6 +3,8 @@ import { Container, width } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { GetAllPositions,AddPostApi } from '../Services/api';
 import {useNavigate} from "react-router-dom";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 export default function AddPost() {
 
@@ -36,14 +38,16 @@ export default function AddPost() {
                 navigate("/mycompanypost")
             })
         }else{
-            alert("Boş birakma")
+            NotificationManager.warning("Bütün Alanları doldurduğunuzdan emin olunuz!")
         }
     }
 
     return (
-        <Container  style= {{marginTop :"30px"}}>
+        <>
+           <p style={{ fontSize: "25px", textAlign:"center" , fontWeight:"700"}}>İlan Oluştur</p>
+           <Container  style= {{marginTop :"30px"}}>
           <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Posizyon Seçiniz</InputLabel>
+        <InputLabel id="demo-simple-select-label">Pozisyon Seçiniz</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -70,8 +74,10 @@ export default function AddPost() {
         />
 
             <Button style={{width:"100%",marginTop:"15px"}} color="primary" onClick={handleSubmit}>İlan Ekle</Button>
-
+            <NotificationContainer/>
         </Container>
+        </>
+       
     );
 
 }

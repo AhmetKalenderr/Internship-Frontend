@@ -9,6 +9,10 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import classes from '../asset/Styles/_Login.module.css'
 import images from '../asset/images/login.png'
+import classes2 from "../asset/Styles/_Navbar.module.css";
+import images2 from "../asset/images/STAJ.png";
+
+
 
 export default function Login({isUser,setIsUser,login,setLogin,isRegister,setIsRegister}) {
 
@@ -62,6 +66,24 @@ export default function Login({isUser,setIsUser,login,setLogin,isRegister,setIsR
 
   return (
     <div>
+      <div style={{textAlign:"right",marginRight:"50px"}}>
+      {!login && !isRegister && (
+                  <Button variant="contained" className={classes2.container_typography_btn} onClick={() => setIsUser(!isUser)}>
+                    {isUser === true ? 'Şirket Girişi' : 'Kullanıcı Girişi'}
+                  </Button>
+                )}
+
+                {!login && isRegister && (
+                  <Button
+                  className={classes2.container_typography_btn}
+                    variant="contained"
+                    style={{ marginRight: "10px" }}
+                    onClick={() => setIsUser(!isUser)}
+                  >
+                    {isUser === true ? 'Şirket Kayıt Ekranı' : 'Kullanıcı Kayıt Ekranı'}
+                  </Button>
+                )}
+      </div>
       <img src={images} className={classes.container_img} />
       <Container className={classes.container_login} maxWidth="sm">
         <div style={{padding: "25px"}}>

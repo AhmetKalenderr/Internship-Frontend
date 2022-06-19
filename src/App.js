@@ -29,14 +29,16 @@ function App() {
   return (
     <>
     <Navi isUser={isUser} setIsUser={setIsUser} login={login} setLogin={setLogin} isRegister={isRegister}/>
-    <Routes>
+    <div style={{marginTop:"60px"}}>
+       <Routes>
       <Route path='/login' element={ <Login isUser={isUser} setIsUser={setIsUser} login={login} setLogin={setLogin} isRegister={isRegister} setIsRegister = {setIsRegister}/>}></Route>
-      <Route path='/' element={<HomePage isUser={isUser}/>}></Route>
+      <Route path='/' element={<HomePage isUser={isUser} login={login}/>}></Route>
       <Route path="/myapppost" element={<UserAppPost/>}></Route>
       <Route path="/addpost" element={<AddPost/>}></Route>
       <Route path="/mycompanypost" element={<CompanyPosts/>}></Route>
       <Route path="/register" element={<Register  isRegister={isRegister} setIsRegister = {setIsRegister} isUser={isUser}/>}></Route>
-    </Routes>
+    </Routes></div>
+   
 
 
     

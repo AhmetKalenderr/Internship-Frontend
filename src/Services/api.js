@@ -55,3 +55,7 @@ export const GetAllSchool = () => {
 export const GetUsersFromApp = (value) => {
    return axios.get(`${url}/api/User/getusersfromapp?id=`+value);
 }
+
+export const GetByFilter = (value) => {
+   return axios.post(`${url}/api/InternshipPosting/getbyfilter`,value);
+}

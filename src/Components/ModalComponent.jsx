@@ -1,13 +1,24 @@
-import { Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import React from 'react';
 import Paper from '@mui/material/Paper';
-import { Box, style } from '@mui/system';
+import { Box } from '@mui/system';
 
 function ModalComponent({datas,opened,setOpen}) {
 
     const handleClose = () =>{
         setOpen(false)
     }
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 650,
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
 
     return (
         <Modal
@@ -16,16 +27,16 @@ function ModalComponent({datas,opened,setOpen}) {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
         >
-           <Box sx={{...style,width:650}}>
+           <Box sx={style}>
            <TableContainer component={Paper}>
                 <Table aria-label="simple table"></Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell align='center'>İsim</TableCell>
-                        <TableCell align='center'>Soyisim</TableCell>
-                        <TableCell align='center'>Email Adresi</TableCell>
-                        <TableCell align='center'>Okul</TableCell>
-                        <TableCell align='center'>Başvuru Zamanı</TableCell>
+                        <TableCell align='center' style={{fontSize:"20px"}}>İsim</TableCell>
+                        <TableCell align='center' style={{fontSize:"20px"}}>Soyisim</TableCell>
+                        <TableCell align='center' style={{fontSize:"20px"}}>Email Adresi</TableCell>
+                        <TableCell align='center' style={{fontSize:"20px"}}>Okul</TableCell>
+                        <TableCell align='center' style={{fontSize:"20px"}}>Başvuru Zamanı</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -39,6 +50,9 @@ function ModalComponent({datas,opened,setOpen}) {
                         </TableRow>
                     ))}
                 </TableBody>
+                <div style={{textAlign:"right",margin:"10px"}}>
+                    <Button onClick={handleClose}   style={{color:"blue"}}>Kapat</Button>
+                </div>
             </TableContainer>
            </Box>
 
