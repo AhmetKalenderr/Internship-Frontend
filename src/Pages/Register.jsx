@@ -23,38 +23,30 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
 
 
     useEffect(()=>{
-      if(register) {
-        navigate("/login")
-      }
       GetAllCity().then(resp=>{
         setCities(resp.data.data);
       })
-
-      GetAllSchool().then(resp=>{
-        setSchools(resp.data.data)
-      })
-    },[register,navigate])
+    },[navigate])
 
 
 
 
-    const registerCompanySchema = Yup.object().shape({
-     
+    const registerCompanySchema = Yup.object().shape({ 
         companyName: Yup.string().required("Şirket İsmi alanı boş bırakılamaz!"),
         phoneNumber : Yup.string().required("Telefon Numarası alanı boş bırakılamaz!"),
         email: Yup.string().required("Email alanı boş bırakılamaz!"),
         password : Yup.string().required("Password alanı boş bırakılamaz!"),
         webSite :   Yup.string().required("Web Sitesi Alanı boş bırakılamaz!"),
         cityId : Yup.number().required("Şehir seçimi alanı boş bırakılamaz!")
-       
     });
 
     const registerUserSchema = Yup.object().shape({
       email: Yup.string().required("Email alanı boş bırakılamaz!"),
       password : Yup.string().required("Password alanı boş bırakılamaz!"),
+      phoneNumber: Yup.number().required("Telefon Numarası alanı boş bırakılamaz!"),
       name :  Yup.string().required("İsim Alanı boş bırakılamaz!"),
       surname : Yup.string().required("Soyisim Alanı boş bırakılamaz!"),
-      schoolId : Yup.number().required("Okul seçimi alanı boş bırakılamaz!")
+      cityId : Yup.number().required("Bulunduğunuz Şehir seçimi yapmalısınız")
     });
 
 
@@ -68,13 +60,12 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
             name:"",
             surname:"",
             cityId : "",
-            schoolId : "",
-            bornYear:0
             
         },
         validationSchema:isUser ? registerUserSchema : registerCompanySchema,
         onSubmit:(values) => {
           if(isUser) {
+              console.log(values)
                 RegisterUser(values).then((resp) => {
                   NotificationManager.success(resp.data.data)
                   setIsRegister(false)
@@ -100,11 +91,6 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
       formik.values.cityId = event.target.value;
     }
 
-    const handleSelectedSchool = (event) =>{
-      setSelectedSchool(event.target.value);
-      formik.values.schoolId = event.target.value;
-      formik.values.bornYear = 0;
-    }
 
     return (
       <div>
@@ -173,7 +159,7 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
             error={formik.touched.password && formik.errors.password}
             helperText={formik.errors.password}
           />
-           {!isUser &&  <TextField
+           {<TextField
             id="phoneNumber"
             label="Telefon Numarası"
             type="tel"
@@ -210,7 +196,7 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
             helperText={formik.errors.surname}
           />}
 
-          {!isUser && 
+          {
            <FormControl fullWidth style={{marginTop : "20px" , backgroundColor:"rgba(0, 0, 0, 0.06)"}}>
            <InputLabel id="demo-simple-select-label">Şehir</InputLabel>
            <Select
@@ -223,24 +209,6 @@ export default  function Register({isRegister,setIsRegister,isUser,setIsUser}) {
            >
              {cities.map(c=>(
              <MenuItem value={c.id}>{c.name}</MenuItem>)
-             )}
-           </Select>
-         </FormControl>
-         }
-
-          {isUser && 
-           <FormControl fullWidth style={{marginTop : "20px" , backgroundColor:"rgba(0, 0, 0, 0.06)"}}>
-           <InputLabel id="demo-simple-select-label">Okul</InputLabel>
-           <Select
-             labelId="demo-simple-select-label"
-             id="demo-simple-select"
-             value={selectedSchool}
-             label="Okul"
-             onChange={handleSelectedSchool}
-             error={formik.touched.schoolId && formik.errors.schoolId}
-           >
-             {schools.map(s=>(
-             <MenuItem value={s.id}>{s.name}</MenuItem>)
              )}
            </Select>
          </FormControl>

@@ -17,7 +17,7 @@ export default function CompanyPosts() {
 
     return (
     <Container>
-        <p style={{ fontSize: "25px", textAlign:"center" , fontWeight:"700"}}>İlanlarım</p>
+        <p style={{ fontSize: "25px", textAlign:"center" , fontWeight:"700"}}>Randevular</p>
         <Grid container spacing={3} style={{marginTop:"30px"}}>
             {posts.map(post => (
                <Grid item key ={post.id} xs={12} md={12} lg={12}>

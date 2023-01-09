@@ -61,16 +61,16 @@ function Filter({setFilter}) {
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel id="demo-select-small">Pozisyon</InputLabel>
+        <InputLabel id="demo-select-small">Sektör</InputLabel>
         <Select
           labelId="demo-select-small"
           id="demo-select-small"
           value={selectedPosition}
-          label="Pozisyon"
+          label="Sektör"
           onChange={handleChangePosition}
         >
           <MenuItem value={0}>
-            <em>Pozisyon Seçiniz</em>
+            <em>Sektör Seçiniz</em>
           </MenuItem>
          {positions.map(position=>(
              <MenuItem value={position.id}>{position.name}</MenuItem>

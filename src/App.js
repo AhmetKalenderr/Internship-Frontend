@@ -1,6 +1,7 @@
 import { Route,Routes } from 'react-router-dom';
 import './App.css';
 import Login from './Pages/Login';
+import MailVerified from './Pages/MailVerified';
 import { useEffect, useState } from 'react';
 import Navi from "./Components/Navi"
 import {useNavigate} from "react-router-dom";
@@ -18,11 +19,11 @@ function App() {
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!login) {
-      navigate("/login")
-    }
-  },[login])
+  // useEffect(()=>{
+  //   if(!login) {
+  //     navigate("/login")
+  //   }
+  // },[login])
 
 
 
@@ -36,6 +37,7 @@ function App() {
       <Route path="/myapppost" element={<UserAppPost/>}></Route>
       <Route path="/addpost" element={<AddPost/>}></Route>
       <Route path="/mycompanypost" element={<CompanyPosts/>}></Route>
+      <Route path="/mailVerified" element={<MailVerified/>}></Route>
       <Route path="/register" element={<Register  isRegister={isRegister} setIsRegister = {setIsRegister} isUser={isUser}/>}></Route>
     </Routes></div>
    

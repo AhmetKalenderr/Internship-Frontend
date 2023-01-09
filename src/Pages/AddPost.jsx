@@ -47,12 +47,12 @@ export default function AddPost() {
            <p style={{ fontSize: "25px", textAlign:"center" , fontWeight:"700"}}>İlan Oluştur</p>
            <Container  style= {{marginTop :"30px"}}>
           <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Pozisyon Seçiniz</InputLabel>
+        <InputLabel id="demo-simple-select-label">Sektör Seçiniz</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={selectedPosition}
-          label="Posizyon Seçiniz"
+          label="Sektör Seçiniz"
           onChange={handleChangePosition}
         >
           {positions.map(position => (

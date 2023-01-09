@@ -6,6 +6,9 @@ export const LoginUser = (value) => {
    return axios.post(`${url}/api/User/loginUser`,value);
 }
 
+export const MailVerifY = (value) => {
+   return axios.get(`${url}/api/MailVerify/Verifiedmail?token=`+value);
+}
 
 export const LoginCompany = (value) => {
    return axios.post(`${url}/api/Company/loginCompany`,value);

@@ -154,7 +154,7 @@ export default function Navi({isUser,setIsUser,login,setLogin,isRegister}) {
                            navigate("/myapppost")
                          }}
                        >
-                         <Typography textAlign="center">Başvurduğum ilanlar</Typography>
+                         <Typography textAlign="center">Aldığım Randevular</Typography>
                        </MenuItem>
                       )}
 
@@ -165,7 +165,7 @@ export default function Navi({isUser,setIsUser,login,setLogin,isRegister}) {
                            navigate("/mycompanypost")
                          }}
                        >
-                         <Typography textAlign="center">Oluşturduğum ilanlar</Typography>
+                         <Typography textAlign="center">Randevu Günnleri</Typography>
                        </MenuItem>
                       )}
 
